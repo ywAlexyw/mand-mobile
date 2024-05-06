@@ -10,13 +10,16 @@
     ></canvas>
     <div
       class="md-ruler-cursor"
+      :style="{'--color': color}"
       :class="[isStepTextBottom && 'md-ruler-cursor-bottom']"
     ></div>
-    <div class="md-ruler-arrow"></div>
+    <div class="md-ruler-arrow" 
+      :style="{'--color': color}"></div>
   </div>
 </template>
 
-<script>import Scroller from '../_util/scroller'
+<script>
+import Scroller from '../_util/scroller'
 import {throttle, noop} from '../_util'
 
 export default {
@@ -58,6 +61,14 @@ export default {
       type: Function,
       default: noop,
     },
+    fontSize: {
+      type: Number,
+      default: 22,
+    },
+    color: {
+      type: String,
+      default: '#2F86F6',
+    }
   },
 
   data() {
@@ -229,7 +240,7 @@ export default {
       const {blankLeft, blankRight, canvasWidth} = this
       const [scopeLeft] = scope
 
-      const _fontSize = 22
+      const _fontSize = this.fontSize
       const _y = 120 - (isStepTextBottom ? _fontSize + 40 : 0)
       const _stepUnit = Math.round(step / unit)
 
@@ -347,7 +358,8 @@ export default {
     },
   },
 }
-</script>
+
+</script>
 
 <style lang="stylus">
 .md-ruler
@@ -368,8 +380,8 @@ export default {
     width 2px
     height 70px
     transform translate(-50%)
-    background-color #2F86F6
-    box-shadow 0 2px 4px #2F86F6
+    background-color var(--color)
+    box-shadow 0 2px 4px var(--color)
     &-bottom
       height 40px
   .md-ruler-arrow
@@ -377,7 +389,7 @@ export default {
     position absolute
     bottom 25px
     left 50%
-    border-bottom 10px solid #2F86F6
+    border-bottom 10px solid var(--color)
     border-left 10px solid transparent
     border-right 10px solid transparent
     transform translate(-50%)
